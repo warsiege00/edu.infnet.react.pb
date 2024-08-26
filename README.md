@@ -36,7 +36,7 @@ Este projeto é um sistema de cotação de produtos desenvolvido como parte de u
 
 1. **Clone o Repositório**:
    ```bash
-   git clone <URL_DO_REPOSITORIO>
+   git clone https://github.com/warsiege00/edu.infnet.react.pb
 
    
 2. **Instale as Dependências: Navegue até o diretório do projeto e execute:**:
