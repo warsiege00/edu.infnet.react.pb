@@ -1,27 +1,43 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import MainLayout from "../components/MainLayout.jsx";
 
 const PrivateRoute = () => {
-    const { currentUser } = useAuth();
+    const { currentUser, userRole, userStatus } = useAuth();
     const [loading, setLoading] = useState(true);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const location = useLocation();
+
+    const adminRoutes = ['/config', '/fornecedores'];
 
     useEffect(() => {
         if (currentUser !== null) {
-            setIsAuthenticated(true);
+            setLoading(false);
         } else {
-            setIsAuthenticated(false);
+            setLoading(false);
         }
-        setLoading(false);
     }, [currentUser]);
 
     if (loading) {
         return <span>Loading...</span>;
     }
 
-    return isAuthenticated ? <MainLayout /> : <Navigate to="/login" />;
+    const isAdmin = userRole === 'admin';
+    const isAdminRoute = adminRoutes.includes(location.pathname);
+
+    if (!currentUser) {
+        return <Navigate to="/login" />;
+    }
+
+    if (userStatus === 'blocked') {
+        return <Navigate to="/blocked" />;
+    }
+
+    if (isAdminRoute && !isAdmin) {
+        return <Navigate to="/unauthorized" />;
+    }
+
+    return <MainLayout />;
 };
 
 export default PrivateRoute;

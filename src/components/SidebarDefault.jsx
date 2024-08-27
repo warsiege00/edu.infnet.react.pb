@@ -1,13 +1,15 @@
+// src/components/SidebarDefault.jsx
 import React, { useState, useEffect } from 'react';
-import { IconButton, Drawer, Card, Typography, List, ListItem, ListItemPrefix, ListItemSuffix, Chip } from "@material-tailwind/react";
-import {Link, useNavigate} from "react-router-dom";
+import { IconButton, Drawer, Card, Typography, List, ListItem, ListItemPrefix } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext.jsx"; // Importa o hook useAuth
 
 export function SidebarDefault() {
     const [isOpen, setIsOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
+    const { currentUser, userRole, userName, logout } = useAuth(); // Importa a função logout
 
     const toggleDrawer = () => setIsOpen(!isOpen);
-    const navigate = useNavigate();
 
     useEffect(() => {
         const handleResize = () => {
@@ -19,62 +21,46 @@ export function SidebarDefault() {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const handleClick = (path) => {
-        navigate(path);
-    }
-
+    const isAdmin = userRole === 'admin';
+    console.log(currentUser);
     const sidebarContent = (
         <Card className="h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
             <List>
                 <ListItem>
-                    <Link to={"/config"} className="flex">
+                    <Link to={"/"} className="flex">
                         <ListItemPrefix>
                             {/*<PresentationChartBarIcon className="h-5 w-5" />*/}
                             1
                         </ListItemPrefix>
-                    Dashboard
+                        Dashboard
                     </Link>
                 </ListItem>
-                {/*<ListItem>*/}
-                {/*    <ListItemPrefix>*/}
-                {/*        <InboxIcon className="h-5 w-5" />*/}
-                {/*    </ListItemPrefix>*/}
-                {/*    Cotações*/}
-                {/*    <ListItemSuffix>*/}
-                {/*        <Chip value="14" size="sm" variant="ghost" color="blue-gray" className="rounded-full" />*/}
-                {/*    </ListItemSuffix>*/}
-                {/*</ListItem>*/}
-                {/*<ListItem>*/}
-                {/*    <ListItemPrefix>*/}
-                {/*        <ShoppingBagIcon className="h-5 w-5" />*/}
-                {/*    </ListItemPrefix>*/}
-                {/*    Produtos*/}
-                {/*</ListItem>*/}
-                {/*<ListItem>*/}
-                {/*    <ListItemPrefix>*/}
-                {/*        <UserCircleIcon className="h-5 w-5" />*/}
-                {/*    </ListItemPrefix>*/}
-                {/*    Fornecedores*/}
-                {/*</ListItem>*/}
-                {/*<ListItem>*/}
-                {/*    <ListItemPrefix>*/}
-                {/*        <UserCircleIcon className="h-5 w-5" />*/}
-                {/*    </ListItemPrefix>*/}
-                {/*    Contatos*/}
-                {/*</ListItem>*/}
-                <ListItem>
-                    <Link to={"/config"} className="flex">
-                        <ListItemPrefix>
-                            {/*<Cog6ToothIcon className="h-5 w-5" />*/}
-                            2
-                        </ListItemPrefix>
-                        Configurações
-                    </Link>
-                </ListItem>
-                <ListItem>
+                {isAdmin && (
+                    <ListItem>
+                        <Link to={"/fornecedores"} className="flex">
+                            <ListItemPrefix>
+                                {/*<UserCircleIcon className="h-5 w-5" />*/}
+                                2
+                            </ListItemPrefix>
+                            Fornecedores
+                        </Link>
+                    </ListItem>
+                )}
+                {isAdmin && (
+                    <ListItem>
+                        <Link to={"/config"} className="flex">
+                            <ListItemPrefix>
+                                {/*<Cog6ToothIcon className="h-5 w-5" />*/}
+                                3
+                            </ListItemPrefix>
+                            Configurações
+                        </Link>
+                    </ListItem>
+                )}
+                <ListItem onClick={logout}>
                     <ListItemPrefix>
                         {/*<PowerIcon className="h-5 w-5" />*/}
-                        3
+                        4
                     </ListItemPrefix>
                     Sair
                 </ListItem>
@@ -85,13 +71,18 @@ export function SidebarDefault() {
     return (
         <div>
             {isMobile && (
-                <IconButton
-                    className="m-4"
-                    onClick={toggleDrawer}
-                >
-                    {/*<Bars3Icon className="w-6 h-6" />*/}
-                    Menu
-                </IconButton>
+                <div>
+                    <IconButton
+                        className="m-4"
+                        onClick={toggleDrawer}
+                    >
+                        {/*<Bars3Icon className="w-6 h-6" />*/}
+                        Menu
+                    </IconButton>
+                    <span>
+                        {userName ? userName : 'Nome de usuário desconhecido!'}
+                    </span>
+                </div>
             )}
 
             {!isMobile && (
