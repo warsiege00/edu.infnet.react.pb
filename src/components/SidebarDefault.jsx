@@ -1,13 +1,13 @@
-// src/components/SidebarDefault.jsx
 import React, { useState, useEffect } from 'react';
-import { IconButton, Drawer, Card, Typography, List, ListItem, ListItemPrefix } from "@material-tailwind/react";
+import { IconButton, Drawer, Card, List, ListItem, ListItemPrefix } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
-import { useAuth } from "../context/AuthContext.jsx"; // Importa o hook useAuth
+import { useAuth } from "../context/AuthContext.jsx";
+import {PresentationChartBarIcon, UserCircleIcon} from "@heroicons/react/solid";
 
 export function SidebarDefault() {
     const [isOpen, setIsOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
-    const { currentUser, userRole, userName, logout } = useAuth(); // Importa a função logout
+    const { currentUser, userRole, userName, logout } = useAuth(); 
 
     const toggleDrawer = () => setIsOpen(!isOpen);
 
@@ -22,25 +22,33 @@ export function SidebarDefault() {
     }, []);
 
     const isAdmin = userRole === 'admin';
-    console.log(currentUser);
     const sidebarContent = (
         <Card className="h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
             <List>
+                {isAdmin && (
+                    <ListItem>
+                        <Link to={"/cotacoes"} className="flex">
+                            <ListItemPrefix>
+                                <UserCircleIcon className="h-5 w-5" />
+                            </ListItemPrefix>
+                            Cotações
+                        </Link>
+                    </ListItem>
+                )}
                 <ListItem>
-                    <Link to={"/"} className="flex">
+                    <Link to={"/solicitacoes"} className="flex">
                         <ListItemPrefix>
-                            {/*<PresentationChartBarIcon className="h-5 w-5" />*/}
-                            1
+                            <UserCircleIcon className="h-5 w-5" />
                         </ListItemPrefix>
-                        Dashboard
+                        Solicitações de compras
                     </Link>
                 </ListItem>
+                
                 {isAdmin && (
                     <ListItem>
                         <Link to={"/fornecedores"} className="flex">
                             <ListItemPrefix>
-                                {/*<UserCircleIcon className="h-5 w-5" />*/}
-                                2
+                                <UserCircleIcon className="h-5 w-5" />
                             </ListItemPrefix>
                             Fornecedores
                         </Link>
@@ -48,10 +56,29 @@ export function SidebarDefault() {
                 )}
                 {isAdmin && (
                     <ListItem>
+                        <Link to={"/contatos"} className="flex">
+                            <ListItemPrefix>
+                                <UserCircleIcon className="h-5 w-5" />
+                            </ListItemPrefix>
+                            Contatos
+                        </Link>
+                    </ListItem>
+                )}
+                {isAdmin && (
+                    <ListItem>
+                        <Link to={"/produtos"} className="flex">
+                            <ListItemPrefix>
+                                <UserCircleIcon className="h-5 w-5" />
+                            </ListItemPrefix>
+                            Produtos
+                        </Link>
+                    </ListItem>
+                )}
+                {isAdmin && (
+                    <ListItem>
                         <Link to={"/config"} className="flex">
                             <ListItemPrefix>
-                                {/*<Cog6ToothIcon className="h-5 w-5" />*/}
-                                3
+                                <UserCircleIcon className="h-5 w-5" />
                             </ListItemPrefix>
                             Configurações
                         </Link>
@@ -87,18 +114,13 @@ export function SidebarDefault() {
 
             {!isMobile && (
                 <div>
-                    <Typography variant="h5" color="blue-gray">
-                        APP
-                    </Typography>
+                   
                     {sidebarContent}
                 </div>
             )}
 
             <Drawer open={isOpen} onClose={toggleDrawer} className="p-4">
                 <div className="flex justify-between items-center mb-4">
-                    <Typography variant="h5" color="blue-gray">
-                        APP
-                    </Typography>
                     <IconButton onClick={toggleDrawer}>
                         {/*<XMarkIcon className="w-6 h-6" />*/}
                         X

@@ -3,25 +3,30 @@ import {
     Typography,
     Button,
 } from "@material-tailwind/react";
-import useSuppliers from '../hooks/useSuppliers';
+import useProducts from '../hooks/useProducts';
+import ProductList from '../components/Product/ProductList';
 import DialogWrapper from '../components/DialogWrapper';
-import SupplierForm from '../components/Supplier/SupplierForm';
-import SupplierList from '../components/Supplier/SupplierList';
+import ProductForm from '../components/Product/ProductForm';
 
-const SupplierPage = () => {
-    const { suppliers, loading, addSupplier, deleteSupplier } = useSuppliers();
-    const [form, setForm] = useState({ name: '', cnpj: '', email: '', phone: '' });
+const ProductPage = () => {
+    const { products, loading, addProduct, deleteProduct } = useProducts();
+    const [form, setForm] = useState({
+        name: '',
+        description: '',
+        category: '',
+        basePrice: ''
+    });
     const [errors, setErrors] = useState({});
     const [openFormDialog, setOpenFormDialog] = useState(false);
     const [openDetailDialog, setOpenDetailDialog] = useState(false);
-    const [selectedSupplier, setSelectedSupplier] = useState(null);
+    const [selectedProduct, setSelectedProduct] = useState(null);
 
     const validateForm = () => {
         const newErrors = {};
         if (!form.name) newErrors.name = 'Nome é obrigatório';
-        if (!form.cnpj) newErrors.cnpj = 'CNPJ é obrigatório';
-        if (!form.email) newErrors.email = 'Email é obrigatório';
-        if (!form.phone) newErrors.phone = 'Telefone é obrigatório';
+        if (!form.description) newErrors.description = 'Descrição é obrigatória';
+        if (!form.category) newErrors.category = 'Categoria é obrigatória';
+        if (!form.basePrice || isNaN(parseFloat(form.basePrice))) newErrors.basePrice = 'Preço base é obrigatório e deve ser um número';
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
@@ -33,19 +38,19 @@ const SupplierPage = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!validateForm()) return;
-        addSupplier(form);
-        setForm({ name: '', cnpj: '', email: '', phone: '' });
+        addProduct(form);
+        setForm({ name: '', description: '', category: '', basePrice: '' });
         setOpenFormDialog(false);
     };
 
-    const handleViewDetails = (supplier) => {
-        setSelectedSupplier(supplier);
+    const handleViewDetails = (product) => {
+        setSelectedProduct(product);
         setOpenDetailDialog(true);
     };
 
     const handleDelete = () => {
-        if (selectedSupplier) {
-            deleteSupplier(selectedSupplier.id);
+        if (selectedProduct) {
+            deleteProduct(selectedProduct.id);
             setOpenDetailDialog(false);
         }
     };
@@ -53,24 +58,26 @@ const SupplierPage = () => {
     return (
         <div className="p-4 space-y-8">
             <div className="flex justify-between items-center mb-6">
-                <Typography variant="h4">Fornecedores</Typography>
-                <Button onClick={() => setOpenFormDialog(true)} color="blue">Cadastrar Novo Fornecedor</Button>
+                <Typography variant="h4">Cadastro de Produtos</Typography>
+                <Button onClick={() => setOpenFormDialog(true)} color="blue">
+                    Cadastrar Novo Produto
+                </Button>
             </div>
 
-            <SupplierList
-                suppliers={suppliers}
+            <ProductList
+                products={products}
                 handleViewDetails={handleViewDetails}
                 loading={loading}
             />
 
-            {/* Formulário de cadastro de fornecedores */}
+            {/* Formulário de cadastro de produtos */}
             <DialogWrapper
                 open={openFormDialog}
                 setOpen={setOpenFormDialog}
-                title="Cadastrar Novo Fornecedor"
+                title="Cadastrar Novo Produto"
                 actions={<Button variant="text" color="red" onClick={() => setOpenFormDialog(false)}>Cancelar</Button>}
             >
-                <SupplierForm
+                <ProductForm
                     form={form}
                     setForm={setForm}
                     handleSubmit={handleSubmit}
@@ -79,11 +86,11 @@ const SupplierPage = () => {
                 />
             </DialogWrapper>
 
-            {/* Detalhes do fornecedor */}
+            {/* Detalhes do produto */}
             <DialogWrapper
                 open={openDetailDialog}
                 setOpen={setOpenDetailDialog}
-                title="Detalhes do Fornecedor"
+                title="Detalhes do Produto"
                 actions={(
                     <>
                         <Button color="red" onClick={handleDelete} className="mr-2">Excluir</Button>
@@ -91,12 +98,12 @@ const SupplierPage = () => {
                     </>
                 )}
             >
-                {selectedSupplier && (
+                {selectedProduct && (
                     <div>
-                        <Typography variant="h6">Nome: {selectedSupplier.name}</Typography>
-                        <Typography variant="h6">CNPJ: {selectedSupplier.cnpj}</Typography>
-                        <Typography variant="h6">Email: {selectedSupplier.email}</Typography>
-                        <Typography variant="h6">Telefone: {selectedSupplier.phone}</Typography>
+                        <Typography variant="h6">Nome: {selectedProduct.name}</Typography>
+                        <Typography variant="h6">Descrição: {selectedProduct.description}</Typography>
+                        <Typography variant="h6">Categoria: {selectedProduct.category}</Typography>
+                        <Typography variant="h6">Preço Base: {selectedProduct.basePrice}</Typography>
                     </div>
                 )}
             </DialogWrapper>
@@ -104,4 +111,4 @@ const SupplierPage = () => {
     );
 };
 
-export default SupplierPage;
+export default ProductPage;

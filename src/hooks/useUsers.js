@@ -76,7 +76,7 @@ export function useUsers() {
             const userDocRef = doc(db, 'users', userId);
             await updateDoc(userDocRef, { status });
             console.log(`Status do usuário ${userId} atualizado para ${status}`);
-            // Atualiza o estado dos usuários localmente após a atualização
+        
             setUsers(prevUsers =>
                 prevUsers.map(user =>
                     user.id === userId ? { ...user, status } : user

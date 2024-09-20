@@ -17,7 +17,7 @@ import {
     Switch,
 } from "@material-tailwind/react";
 import { UserCircleIcon } from "@heroicons/react/solid";
-import { useUsers } from '../util/useUsers.js';
+import { useUsers } from '../hooks/useUsers.js';
 
 function ConfigPage() {
     const { users, createUser, updateUserRole, updateUserStatus, loading } = useUsers();

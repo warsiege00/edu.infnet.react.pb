@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { signIn } from "../util/useAuth.js";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import { Button, Card, Input, Typography, Spinner } from "@material-tailwind/react";
@@ -10,7 +9,7 @@ function LoginPage() {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    const { currentUser } = useAuth();
+    const { currentUser, signIn } = useAuth();
 
     const navigateToDashbboard = () => {
         navigate('/dashboard');

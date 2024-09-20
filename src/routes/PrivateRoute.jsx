@@ -8,7 +8,7 @@ const PrivateRoute = () => {
     const [loading, setLoading] = useState(true);
     const location = useLocation();
 
-    const adminRoutes = ['/config', '/fornecedores'];
+    const adminRoutes = ['/config', '/fornecedores', '/contatos', '/produtos', '/cotacoes',];
 
     useEffect(() => {
         if (currentUser !== null) {

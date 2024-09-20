@@ -9,7 +9,7 @@ const BlockedPage = () => {
 
     const handleReturnToLogin = async () => {
         await logout();
-        navigate('/login'); // Redireciona o usuário para a página de login
+        navigate('/login');  
     };
 
     return (
