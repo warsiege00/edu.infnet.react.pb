@@ -49,7 +49,7 @@ export const RegisterPage = () => {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <div className="flex justify-center">
             <Card className="w-full max-w-sm p-8">
                 <Typography variant="h4" className="mb-4 text-center">
                     Registrar

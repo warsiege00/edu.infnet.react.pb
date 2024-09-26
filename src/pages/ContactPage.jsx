@@ -8,6 +8,7 @@ import useSuppliers from '../hooks/useSuppliers';
 import DialogWrapper from '../components/DialogWrapper';
 import ContactForm from '../components/Contact/ContactForm';
 import ContactList from '../components/Contact/ContactList';
+import FAB from '../components/Fab';
 
 const ContactPage = () => {
     const { suppliers } = useSuppliers();
@@ -74,7 +75,7 @@ const ContactPage = () => {
         <div className="p-4 space-y-8">
             <div className="flex justify-between items-center mb-6">
                 <Typography variant="h4">Contatos de Fornecedores</Typography>
-                <Button onClick={() => setOpenFormDialog(true)}>Cadastrar Novo Contato</Button>
+                <FAB onClick={() => setOpenFormDialog(true)} />
             </div>
 
             <ContactList

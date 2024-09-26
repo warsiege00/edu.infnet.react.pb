@@ -80,7 +80,7 @@ const QuotesPage = () => {
             <Spinner className="m-auto" />
         ) : (
             <div className="overflow-x-auto">
-                <table className="min-w-full table-auto hidden md:table"> 
+                <table className="min-w-full table-auto hidden lg:table"> 
                     <thead>
                         <tr>
                             <th className="px-4 py-2">Descrição</th>
@@ -104,7 +104,7 @@ const QuotesPage = () => {
                 </table>
 
                 {/* mobile */}
-                <div className="block md:hidden">
+                <div className="block lg:hidden">
                     {requests.map(request => (
                         <div key={request.id} className="border rounded-lg mb-4 p-4 shadow-sm hover:bg-gray-100 cursor-pointer" onClick={() => handleOpenDetails(request)}>
                             <p><strong>Descrição:</strong> {request.description}</p>

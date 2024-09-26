@@ -85,7 +85,7 @@ export function SidebarDefault() {
                     </Link>
                 )}
             </List>
-            <Button onClick={logout} className="w-full mt-4">
+            <Button variant="gradient" onClick={logout} className="w-full mt-4">
                 Sair
             </Button>
         </Card>
@@ -94,7 +94,7 @@ export function SidebarDefault() {
     return (
         <div>
             {/* MObile */}
-            <div className="md:hidden">
+            <div className="lg:hidden">
                 <IconButton className="m-4" onClick={toggleDrawer}>
                     <MenuIcon className="h-5 w-5" />
                 </IconButton>
@@ -108,7 +108,7 @@ export function SidebarDefault() {
                 </Drawer>
             </div>
             {/* Desktop */}
-            <div className="hidden md:block pl-3">
+            <div className="hidden lg:block pl-3">
                 {sidebarContent}
             </div>
         </div>

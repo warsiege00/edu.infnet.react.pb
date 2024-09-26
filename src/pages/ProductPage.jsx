@@ -7,6 +7,8 @@ import useProducts from '../hooks/useProducts';
 import ProductList from '../components/Product/ProductList';
 import DialogWrapper from '../components/DialogWrapper';
 import ProductForm from '../components/Product/ProductForm';
+import { PlusIcon } from '@heroicons/react/solid';
+import FAB from '../components/Fab';
 
 const ProductPage = () => {
     const { products, loading, addProduct, deleteProduct } = useProducts();
@@ -59,9 +61,7 @@ const ProductPage = () => {
         <div className="p-4 space-y-8">
             <div className="flex justify-between items-center mb-6">
                 <Typography variant="h4">Cadastro de Produtos</Typography>
-                <Button onClick={() => setOpenFormDialog(true)}>
-                    Cadastrar Novo Produto
-                </Button>
+                <FAB onClick={() => setOpenFormDialog(true)} />
             </div>
 
             <ProductList

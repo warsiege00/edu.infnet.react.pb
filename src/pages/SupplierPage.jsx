@@ -7,6 +7,7 @@ import useSuppliers from '../hooks/useSuppliers';
 import DialogWrapper from '../components/DialogWrapper';
 import SupplierForm from '../components/Supplier/SupplierForm';
 import SupplierList from '../components/Supplier/SupplierList';
+import FAB from '../components/Fab';
 
 const SupplierPage = () => {
     const { suppliers, loading, addSupplier, deleteSupplier } = useSuppliers();
@@ -54,7 +55,7 @@ const SupplierPage = () => {
         <div className="p-4 space-y-8">
             <div className="flex justify-between items-center mb-6">
                 <Typography variant="h4">Fornecedores</Typography>
-                <Button onClick={() => setOpenFormDialog(true)}>Cadastrar Novo Fornecedor</Button>
+                <FAB onClick={() => setOpenFormDialog(true)} />
             </div>
 
             <SupplierList

@@ -15,6 +15,7 @@ import usePurchaseRequests from '../hooks/usePurchaseRequests';
 import useProducts from '../hooks/useProducts'; 
 import useQuotes from '../hooks/useQuotes';
 import { exportQuotesToCSV } from '../hooks/util';
+import FAB from '../components/Fab';
 
 const PurchaseRequestPage = () => {
     const { products, loading: loadingProducts } = useProducts();
@@ -71,9 +72,7 @@ const PurchaseRequestPage = () => {
         <div className="p-4 space-y-8">
             <div className="flex justify-between items-center mb-6">
                 <Typography variant="h4">Solicitações de Compras</Typography>
-                <Button onClick={() => setOpenFormDialog(true)}>
-                    Nova Requisição
-                </Button>
+                <FAB onClick={() => setOpenFormDialog(true)} />
             </div>
 
             
@@ -87,7 +86,7 @@ const PurchaseRequestPage = () => {
                         <Spinner className="m-auto" />
                     ) : (
                         <div className="overflow-x-auto">
-                            <table className="min-w-full table-auto hidden md:table">
+                            <table className="min-w-full table-auto hidden lg:table">
                                 <thead>
                                     <tr>
                                         <th className="px-4 py-2">Descrição</th>
@@ -112,7 +111,7 @@ const PurchaseRequestPage = () => {
                                 </tbody>
                             </table>
 
-                            <div className="block md:hidden">
+                            <div className="block lg:hidden">
                                 {requests.map(request => (
                                     <div key={request.id} className="border rounded-lg mb-4 p-4 shadow-sm hover:bg-gray-100 cursor-pointer" onClick={() => handleViewDetails(request)}>
                                         <p><strong>Descrição:</strong> {request.description}</p>
