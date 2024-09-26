@@ -4,7 +4,6 @@ import {
     Typography,
     List,
     ListItem,
-    ListItemPrefix,
     Spinner,
     Button,
     Dialog,
@@ -16,7 +15,6 @@ import {
     Option,
     Switch,
 } from "@material-tailwind/react";
-import { UserCircleIcon } from "@heroicons/react/solid";
 import { useUsers } from '../hooks/useUsers.js';
 
 function ConfigPage() {
@@ -56,7 +54,7 @@ function ConfigPage() {
         <>
             <div className="flex justify-between items-center mb-6">
                 <h1>Configurações</h1>
-                <Button onClick={() => setOpen(true)} color="blue">
+                <Button onClick={() => setOpen(true)}>
                     Criar Novo Usuário
                 </Button>
             </div>
@@ -84,9 +82,7 @@ function ConfigPage() {
                                 {users.map(user => (
                                     <ListItem key={user.id} className="flex justify-between items-center">
                                         <div className="flex items-center space-x-4">
-                                            <ListItemPrefix>
-                                                <UserCircleIcon className="h-5 w-5" />
-                                            </ListItemPrefix>
+                                           
                                             <div>
                                                 <Typography variant="paragraph">{user.name}</Typography>
                                                 <Typography variant="paragraph" color="gray">
@@ -158,7 +154,6 @@ function ConfigPage() {
                         Cancelar
                     </Button>
                     <Button
-                        color="blue"
                         onClick={handleCreateUser}
                     >
                         Criar Usuário

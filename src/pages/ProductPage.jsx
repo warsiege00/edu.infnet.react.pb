@@ -59,7 +59,7 @@ const ProductPage = () => {
         <div className="p-4 space-y-8">
             <div className="flex justify-between items-center mb-6">
                 <Typography variant="h4">Cadastro de Produtos</Typography>
-                <Button onClick={() => setOpenFormDialog(true)} color="blue">
+                <Button onClick={() => setOpenFormDialog(true)}>
                     Cadastrar Novo Produto
                 </Button>
             </div>
@@ -70,7 +70,7 @@ const ProductPage = () => {
                 loading={loading}
             />
 
-            {/* Formulário de cadastro de produtos */}
+            {/* form de cadastro de produtos */}
             <DialogWrapper
                 open={openFormDialog}
                 setOpen={setOpenFormDialog}
@@ -94,7 +94,7 @@ const ProductPage = () => {
                 actions={(
                     <>
                         <Button color="red" onClick={handleDelete} className="mr-2">Excluir</Button>
-                        <Button color="blue" onClick={() => setOpenDetailDialog(false)}>Fechar</Button>
+                        <Button color="blue-gray" onClick={() => setOpenDetailDialog(false)}>Fechar</Button>
                     </>
                 )}
             >

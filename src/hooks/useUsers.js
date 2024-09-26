@@ -25,7 +25,7 @@ export function useUsers() {
         fetchUsers();
     }, []);
 
-    const createUser = async (name, email, password, role, status) => {
+     const createUser = async (name, email, password, role, status) => {
         try {
             console.log("Tentando criar usuário...");
             const loggedUser = auth.currentUser

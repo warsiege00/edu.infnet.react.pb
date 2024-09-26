@@ -74,7 +74,7 @@ const ContactPage = () => {
         <div className="p-4 space-y-8">
             <div className="flex justify-between items-center mb-6">
                 <Typography variant="h4">Contatos de Fornecedores</Typography>
-                <Button onClick={() => setOpenFormDialog(true)} color="blue">Cadastrar Novo Contato</Button>
+                <Button onClick={() => setOpenFormDialog(true)}>Cadastrar Novo Contato</Button>
             </div>
 
             <ContactList
@@ -109,7 +109,7 @@ const ContactPage = () => {
                 actions={(
                     <>
                         <Button color="red" onClick={handleDelete} className="mr-2">Excluir</Button>
-                        <Button color="blue" onClick={() => setOpenDetailDialog(false)}>Fechar</Button>
+                        <Button color="blue-gray" onClick={() => setOpenDetailDialog(false)}>Fechar</Button>
                     </>
                 )}
             >

@@ -21,7 +21,7 @@ const BlockedPage = () => {
                 <Typography variant="paragraph" color="gray" className="mb-6">
                     Sua conta foi bloqueada. Se você acredita que isso foi um engano, entre em contato com o suporte.
                 </Typography>
-                <Button color="blue" onClick={handleReturnToLogin}>
+                <Button onClick={handleReturnToLogin}>
                     Voltar para Login
                 </Button>
             </div>

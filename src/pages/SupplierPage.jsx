@@ -54,7 +54,7 @@ const SupplierPage = () => {
         <div className="p-4 space-y-8">
             <div className="flex justify-between items-center mb-6">
                 <Typography variant="h4">Fornecedores</Typography>
-                <Button onClick={() => setOpenFormDialog(true)} color="blue">Cadastrar Novo Fornecedor</Button>
+                <Button onClick={() => setOpenFormDialog(true)}>Cadastrar Novo Fornecedor</Button>
             </div>
 
             <SupplierList
@@ -87,7 +87,7 @@ const SupplierPage = () => {
                 actions={(
                     <>
                         <Button color="red" onClick={handleDelete} className="mr-2">Excluir</Button>
-                        <Button color="blue" onClick={() => setOpenDetailDialog(false)}>Fechar</Button>
+                        <Button color="blue-gray" onClick={() => setOpenDetailDialog(false)}>Fechar</Button>
                     </>
                 )}
             >

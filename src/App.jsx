@@ -1,6 +1,5 @@
 import { AuthProvider } from "./context/AuthContext.jsx";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-
 import PublicRoute from "./routes/PublicRoute.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import PrivateRoute from "./routes/PrivateRoute.jsx";
@@ -13,6 +12,7 @@ import ContactPage from "./pages/ContactPage.jsx";
 import ProductPage from "./pages/ProductPage.jsx";
 import QuotePage from "./pages/QuotePage.jsx";
 import PurchaseRequestPage from "./pages/PurchaseRequestPage.jsx";
+import RegisterPage from "./pages/RegisterPage.jsx";
 
 export default function App() {
 
@@ -20,12 +20,13 @@ export default function App() {
       <AuthProvider>
           <Router>
             <Routes>
-              {/* Rotas Públicas */}
+              {/* Rotas publicas */}
               <Route element={<PublicRoute />}>
                 <Route path="/login" element={<LoginPage />} />
+                <Route path="/registro" element={<RegisterPage />} />
               </Route>
 
-              {/* Rotas Privadas */}
+              {/* rotas Privadas */}
               <Route element={<PrivateRoute />}>
                 <Route path="/config" element={<ConfigPage />} />
                 <Route path="/fornecedores" element={<SupplierPage />} />
@@ -35,10 +36,10 @@ export default function App() {
                 <Route path="/solicitacoes" element={<PurchaseRequestPage />} />
               </Route>
               <Route path="/blocked" element={<BlockedPage />} />
-              {/* Página de acesso não autorizado */}
+              {/* pagina de acesso não autorizado */}
               <Route path="/unauthorized" element={<UnauthorizedPage />} />
 
-              {/* Redirecionar para página 404 se não encontrado */}
+              {/* Redirecionar para pagina 404 se não encontrado */}
               <Route path="*" element={<RedirectNotFoundRoute />} />
             </Routes>
           </Router>

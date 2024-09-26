@@ -72,40 +72,55 @@ const QuotesPage = () => {
 
     return (
         <div className="p-4 space-y-8">
-            <Typography variant="h4" className="mb-6">Lista de Requisições de Compras</Typography>
+            <Typography variant="h4" className="mb-6">Cotações</Typography>
 
             <Card className="shadow-xl">
-                <CardBody>
-                    {loadingRequests ? (
-                        <Spinner className="m-auto" />
-                    ) : (
-                        <table className="min-w-full table-auto">
-                            <thead>
-                                <tr>
-                                    <th className="px-4 py-2">Descrição</th>
-                                    <th className="px-4 py-2">Produto</th>
-                                    <th className="px-4 py-2">Quantidade</th>
-                                    <th className="px-4 py-2">Data Desejada</th>
-                                    <th className="px-4 py-2">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {requests.map(request => (
-                                    <tr key={request.id} className="hover:bg-gray-100 cursor-pointer" onClick={() => handleOpenDetails(request)}>
-                                        <td className="border px-4 py-2">{request.description}</td>
-                                        <td className="border px-4 py-2">{request.productName}</td>
-                                        <td className="border px-4 py-2">{request.quantity}</td>
-                                        <td className="border px-4 py-2">{request.desiredDate}</td>
-                                        <td className="border px-4 py-2">{request.status}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    )}
-                </CardBody>
-            </Card>
+    <CardBody>
+        {loadingRequests ? (
+            <Spinner className="m-auto" />
+        ) : (
+            <div className="overflow-x-auto">
+                <table className="min-w-full table-auto hidden md:table"> 
+                    <thead>
+                        <tr>
+                            <th className="px-4 py-2">Descrição</th>
+                            <th className="px-4 py-2">Produto</th>
+                            <th className="px-4 py-2">Quantidade</th>
+                            <th className="px-4 py-2">Data Desejada</th>
+                            <th className="px-4 py-2">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {requests.map(request => (
+                            <tr key={request.id} className="hover:bg-gray-100 cursor-pointer" onClick={() => handleOpenDetails(request)}>
+                                <td className="border px-4 py-2">{request.description}</td>
+                                <td className="border px-4 py-2">{request.productName}</td>
+                                <td className="border px-4 py-2">{request.quantity}</td>
+                                <td className="border px-4 py-2">{request.desiredDate}</td>
+                                <td className="border px-4 py-2">{request.status}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
 
-            {/* Detalhes da requisição */}
+                {/* mobile */}
+                <div className="block md:hidden">
+                    {requests.map(request => (
+                        <div key={request.id} className="border rounded-lg mb-4 p-4 shadow-sm hover:bg-gray-100 cursor-pointer" onClick={() => handleOpenDetails(request)}>
+                            <p><strong>Descrição:</strong> {request.description}</p>
+                            <p><strong>Produto:</strong> {request.productName}</p>
+                            <p><strong>Quantidade:</strong> {request.quantity}</p>
+                            <p><strong>Data Desejada:</strong> {request.desiredDate}</p>
+                            <p><strong>Status:</strong> {request.status}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        )}
+    </CardBody>
+</Card>
+
+            {/* Detalhes da req */}
             <Dialog open={openDetailDialog} handler={setOpenDetailDialog}>
                 <DialogHeader>Detalhes da Requisição</DialogHeader>
                 <DialogBody className="max-h-80 overflow-y-auto">
@@ -144,7 +159,7 @@ const QuotesPage = () => {
                                 ))}
                             </ul>
 
-                            {/* Formulário de cadastro de cotação */}
+                            {/* form de cadastro de cotacao */}
                             <form onSubmit={handleSubmit} className="mt-4">
                                 <div className="mb-4">
                                     <select
@@ -199,13 +214,13 @@ const QuotesPage = () => {
                                         helperText={errors.paymentTerms}
                                     />
                                 </div>
-                                <Button type="submit" color="blue">Cadastrar Cotação</Button>
+                                <Button type="submit">Cadastrar Cotação</Button>
                             </form>
                         </div>
                     )}
                 </DialogBody>
                 <DialogFooter>
-                    <Button variant="text" color="red" onClick={() => setOpenDetailDialog(false)} className="mr-2">Fechar</Button>
+                    <Button  color="blue-gray" onClick={() => setOpenDetailDialog(false)} className="mr-2">Fechar</Button>
                 </DialogFooter>
             </Dialog>
         </div>

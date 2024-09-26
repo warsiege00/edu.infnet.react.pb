@@ -61,7 +61,7 @@ const ContactForm = ({ form, setForm, suppliers, handleSubmit, errors, handleCha
             </Select>
             {errors.supplier && <Typography color="red" variant="small">{errors.supplier}</Typography>}
         </div>
-        <Button type="submit" color="blue">Cadastrar</Button>
+        <Button type="submit">Cadastrar</Button>
     </form>
 );
 

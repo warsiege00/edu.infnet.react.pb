@@ -70,11 +70,13 @@ const PurchaseRequestPage = () => {
     return (
         <div className="p-4 space-y-8">
             <div className="flex justify-between items-center mb-6">
-                <Typography variant="h4">Requisição de Compras</Typography>
-                <Button onClick={() => setOpenFormDialog(true)} color="blue">
+                <Typography variant="h4">Solicitações de Compras</Typography>
+                <Button onClick={() => setOpenFormDialog(true)}>
                     Nova Requisição
                 </Button>
             </div>
+
+            
 
             <Card className="shadow-xl">
                 <Typography variant="h5" className="p-4">
@@ -84,35 +86,49 @@ const PurchaseRequestPage = () => {
                     {loading ? (
                         <Spinner className="m-auto" />
                     ) : (
-                        <table className="min-w-full table-auto">
-                            <thead>
-                                <tr>
-                                    <th className="px-4 py-2">Descrição</th>
-                                    <th className="px-4 py-2">Produto</th>
-                                    <th className="px-4 py-2">Quantidade</th>
-                                    <th className="px-4 py-2">Data Desejada</th>
-                                    <th className="px-4 py-2">Status</th>
-                                    <th className="px-4 py-2">Criado por</th> {/* Nova coluna */}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {requests.map(request => (
-                                    <tr key={request.id} className="hover:bg-gray-100 cursor-pointer" onClick={() => handleViewDetails(request)}>
-                                        <td className="border px-4 py-2">{request.description}</td>
-                                        <td className="border px-4 py-2">{products.find(p => p.id === request.productId)?.name}</td>
-                                        <td className="border px-4 py-2">{request.quantity}</td>
-                                        <td className="border px-4 py-2">{request.desiredDate}</td>
-                                        <td className="border px-4 py-2">{request.status}</td>
-                                        <td className="border px-4 py-2">{request.createdBy}</td> {/* Exibe o nome do criador */}
+                        <div className="overflow-x-auto">
+                            <table className="min-w-full table-auto hidden md:table">
+                                <thead>
+                                    <tr>
+                                        <th className="px-4 py-2">Descrição</th>
+                                        <th className="px-4 py-2">Produto</th>
+                                        <th className="px-4 py-2">Quantidade</th>
+                                        <th className="px-4 py-2">Data Desejada</th>
+                                        <th className="px-4 py-2">Status</th>
+                                        <th className="px-4 py-2">Criado por</th> 
                                     </tr>
+                                </thead>
+                                <tbody>
+                                    {requests.map(request => (
+                                        <tr key={request.id} className="hover:bg-gray-100 cursor-pointer" onClick={() => handleViewDetails(request)}>
+                                            <td className="border px-4 py-2">{request.description}</td>
+                                            <td className="border px-4 py-2">{products.find(p => p.id === request.productId)?.name}</td>
+                                            <td className="border px-4 py-2">{request.quantity}</td>
+                                            <td className="border px-4 py-2">{request.desiredDate}</td>
+                                            <td className="border px-4 py-2">{request.status}</td>
+                                            <td className="border px-4 py-2">{request.createdBy}</td> 
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+
+                            <div className="block md:hidden">
+                                {requests.map(request => (
+                                    <div key={request.id} className="border rounded-lg mb-4 p-4 shadow-sm hover:bg-gray-100 cursor-pointer" onClick={() => handleViewDetails(request)}>
+                                        <p><strong>Descrição:</strong> {request.description}</p>
+                                        <p><strong>Produto:</strong> {products.find(p => p.id === request.productId)?.name}</p>
+                                        <p><strong>Quantidade:</strong> {request.quantity}</p>
+                                        <p><strong>Data Desejada:</strong> {request.desiredDate}</p>
+                                        <p><strong>Status:</strong> {request.status}</p>
+                                        <p><strong>Criado por:</strong> {request.createdBy}</p>
+                                    </div>
                                 ))}
-                            </tbody>
-                        </table>
+                            </div>
+                        </div>
                     )}
                 </CardBody>
             </Card>
-
-            {/* Formulário de cadastro de requisição */}
+          
             <Dialog open={openFormDialog} handler={setOpenFormDialog}>
                 <DialogHeader>Nova Requisição de Compras</DialogHeader>
                 <DialogBody>
@@ -169,15 +185,14 @@ const PurchaseRequestPage = () => {
                                 helperText={errors.desiredDate}
                             />
                         </div>
-                        <Button type="submit" color="blue">Cadastrar</Button>
+                        <Button type="submit">Cadastrar</Button>
                     </form>
                 </DialogBody>
                 <DialogFooter>
-                    <Button variant="text" color="red" onClick={() => setOpenFormDialog(false)} className="mr-2">Cancelar</Button>
+                    <Button color="red" onClick={() => setOpenFormDialog(false)} className="mr-2">Cancelar</Button>
                 </DialogFooter>
             </Dialog>
 
-            {/* Detalhes da requisição */}
             <Dialog open={openDetailDialog} handler={setOpenDetailDialog}>
                 <DialogHeader>Detalhes da Requisição</DialogHeader>
                 <DialogBody className="max-h-80 overflow-y-auto">
@@ -189,7 +204,7 @@ const PurchaseRequestPage = () => {
                                 <Typography variant="h6">Quantidade: {selectedRequest.quantity}</Typography>
                                 <Typography variant="h6">Data Desejada: {selectedRequest.desiredDate}</Typography>
                                 <Typography variant="h6">Status: {selectedRequest.status}</Typography>
-                                <Typography variant="h6">Criado por: {selectedRequest.createdBy}</Typography> {/* Exibe o nome do criador */}
+                                <Typography variant="h6">Criado por: {selectedRequest.createdBy}</Typography>
                             </div>
                             <div>
                                 <Typography className="mt-4 mb-2" variant="h6">Cotações Relacionadas</Typography>
@@ -211,9 +226,9 @@ const PurchaseRequestPage = () => {
                     )}
                 </DialogBody>
                 <DialogFooter>
-                    <Button color="gray" onClick={() => exportQuotesToCSV(quotes, selectedRequest?.id)}>Exportar Cotações (CSV)</Button>
+                    <Button color="blue" onClick={() => exportQuotesToCSV(quotes, selectedRequest?.id)}>Exportar Cotações (CSV)</Button>
                     <Button color="red" onClick={handleDelete} className="mr-2">Excluir</Button>
-                    <Button color="blue" onClick={() => setOpenDetailDialog(false)}>Fechar</Button>
+                    <Button color="blue-gray" onClick={() => setOpenDetailDialog(false)}>Fechar</Button>
                 </DialogFooter>
             </Dialog>
         </div>

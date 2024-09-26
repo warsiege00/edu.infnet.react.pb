@@ -46,7 +46,7 @@ const SupplierForm = ({ form, setForm, handleSubmit, errors, handleChange }) => 
                 helperText={errors.phone}
             />
         </div>
-        <Button type="submit" color="blue">Cadastrar</Button>
+        <Button type="submit">Cadastrar</Button>
     </form>
 );
 

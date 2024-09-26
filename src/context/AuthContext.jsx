@@ -1,5 +1,12 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { 
+    getAuth,
+    onAuthStateChanged, 
+    signInWithEmailAndPassword, 
+    signOut, 
+    createUserWithEmailAndPassword, 
+    updateProfile
+} from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { app, db } from "../lib/firebase.js";
 import { getCurrentDateTime } from "../hooks/util.js";
@@ -61,8 +68,51 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    const signUp = async (email, password, name) => {
+        try {
+            
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const { user } = userCredential;
+    
+            await updateProfile(user, {
+                displayName: name,
+            });
+    
+            // Recupera o usuário atualmente logado e atualiza o perfil
+            const loggedUser = auth.currentUser;
+            await auth.updateCurrentUser(loggedUser);
+    
+            // Após o registro, cria o documento do usuário no Firestore
+            const userDocRef = doc(db, 'users', user.uid);
+            await setDoc(userDocRef, {
+                uid: user.uid,
+                name: user.displayName || name,
+                email: user.email,
+                role: 'collaborator',  // Define um role padrão
+                status: 'active',
+                created: getCurrentDateTime(),
+                modified: getCurrentDateTime(),
+            }, { merge: true });
+    
+            return user;
+        } catch (error) {
+            console.error("Erro ao registrar o usuário:", error.message);
+            throw new Error(error.message);
+        }
+    };
+    
+
     return (
-        <AuthContext.Provider value={{ currentUser, userRole, userStatus, userName, isAdmin, logout, signIn  }}>
+        <AuthContext.Provider value={{ 
+            currentUser, 
+            userRole, 
+            userStatus, 
+            userName, 
+            isAdmin, 
+            logout, 
+            signIn,
+            signUp  
+        }}>
             {children}
         </AuthContext.Provider>
     );

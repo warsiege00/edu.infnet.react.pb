@@ -10,7 +10,6 @@ const ProductList = ({ products, handleViewDetails, loading }) => (
                 <List>
                     {products.map(product => (
                         <ListItem key={product.id} onClick={() => handleViewDetails(product)}>
-                            {/* {product.name} - {product.category} - {product.basePrice} - {product.description} */}
                             {product.name}
                         </ListItem>
                     ))}
