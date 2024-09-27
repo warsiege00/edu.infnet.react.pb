@@ -82,10 +82,8 @@ function ConfigPage() {
                                 {users.map(user => (
                                     <ListItem key={user.id} className="flex justify-between items-center">
                                         <div className="flex items-center space-x-4">
-                                           
                                             <div>
-                                                <Typography variant="paragraph">{user.name}</Typography>
-                                                <Typography variant="paragraph" color="gray">
+                                                 <Typography variant="paragraph" color="gray">
                                                     {user.email} - {user.role}
                                                 </Typography>
                                             </div>

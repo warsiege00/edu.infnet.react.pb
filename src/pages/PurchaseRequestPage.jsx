@@ -211,10 +211,10 @@ const PurchaseRequestPage = () => {
                                 <ul>
                                     {quotes.filter(quote => quote.purchaseRequestId === selectedRequest.id).map(quote => (
                                         <li key={quote.id} className="border p-2 mb-2">
-                                            <Typography variant="body1">Fornecedor: {quote.supplierName}</Typography>
-                                            <Typography variant="body1">Preço: R$ {quote.price}</Typography>
-                                            <Typography variant="body1">Data da Cotação: {quote.quoteDate}</Typography>
-                                            <Typography variant="body1">Condições de Pagamento: {quote.paymentTerms}</Typography>
+                                            <Typography variant="paragraph">Fornecedor: {quote.supplierName}</Typography>
+                                            <Typography variant="paragraph">Preço: R$ {quote.price}</Typography>
+                                            <Typography variant="paragraph">Data da Cotação: {quote.quoteDate}</Typography>
+                                            <Typography variant="paragraph">Condições de Pagamento: {quote.paymentTerms}</Typography>
                                         </li>
                                     ))}
                                 </ul>

@@ -74,25 +74,34 @@ export const AuthProvider = ({ children }) => {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const { user } = userCredential;
     
-            await updateProfile(user, {
-                displayName: name,
-            });
-    
-            // Recupera o usuário atualmente logado e atualiza o perfil
-            const loggedUser = auth.currentUser;
-            await auth.updateCurrentUser(loggedUser);
-    
-            // Após o registro, cria o documento do usuário no Firestore
-            const userDocRef = doc(db, 'users', user.uid);
-            await setDoc(userDocRef, {
-                uid: user.uid,
-                name: user.displayName || name,
-                email: user.email,
-                role: 'collaborator',  // Define um role padrão
-                status: 'active',
-                created: getCurrentDateTime(),
-                modified: getCurrentDateTime(),
-            }, { merge: true });
+            if (user) {
+                const userDocRef = doc(db, 'users', user.uid);
+                let userDocSnapshot = await getDoc(userDocRef);
+
+                if (!userDocSnapshot.exists()) {
+                    await setDoc(userDocRef, {
+                        uid: user.uid,
+                        name: name || 'User Name',
+                        email: user.email,
+                        role: 'collaborator',
+                        modified: getCurrentDateTime()
+                    }, { merge: true });
+                    userDocSnapshot = await getDoc(userDocRef);
+                }
+
+                const userData = await userDocSnapshot.data();
+                setCurrentUser(user);
+                if(userData){
+                    setUserRole(userData.role || 'collaborator');
+                    setUserStatus(userData.status || 'active');
+                    setUserName(userData.name || 'Desconhecido' );
+                    setIsAdmin(userData.role === 'admin');
+                }
+            } else {
+                setCurrentUser(null);
+                setUserRole('');
+                setUserStatus('');
+            }
     
             return user;
         } catch (error) {
