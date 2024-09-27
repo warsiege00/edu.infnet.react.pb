@@ -10,7 +10,10 @@ const ProductList = ({ products, handleViewDetails, loading }) => (
                 <List>
                     {products.map(product => (
                         <ListItem key={product.id} onClick={() => handleViewDetails(product)}>
-                            {product.name}
+                            <div className="flex flex-col">
+                                <Typography variant="paragraph" className="font-bold">{product.name}</Typography>
+                                <Typography variant="small" className="pl-1">{product.category}</Typography>
+                            </div>
                         </ListItem>
                     ))}
                 </List>

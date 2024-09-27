@@ -10,7 +10,10 @@ const SupplierList = ({ suppliers, handleViewDetails, loading }) => (
                 <List>
                     {suppliers.map(supplier => (
                         <ListItem key={supplier.id} onClick={() => handleViewDetails(supplier)}>
-                            {supplier.name} - {supplier.cnpj} - {supplier.email} - {supplier.phone}
+                            <div className="flex flex-col">
+                                <Typography variant="paragraph" className="font-bold">{supplier.name}</Typography>
+                                <Typography variant="small" className="pl-1">{supplier.email}</Typography>
+                            </div>
                         </ListItem>
                     ))}
                 </List>

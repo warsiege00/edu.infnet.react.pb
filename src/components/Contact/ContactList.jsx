@@ -10,7 +10,10 @@ const ContactList = ({ contacts, handleViewDetails, loading }) => (
                 <List>
                     {contacts.map(contact => (
                         <ListItem key={contact.id} onClick={() => handleViewDetails(contact)}>
-                            {contact.name} - {contact.position} -{contact.email}
+                            <div className="flex flex-col">
+                                <Typography variant="paragraph" className="font-bold">{contact.name}</Typography>
+                                <Typography variant="small" className="pl-1">{contact.email}</Typography>
+                            </div>
                         </ListItem>
                     ))}
                 </List>
