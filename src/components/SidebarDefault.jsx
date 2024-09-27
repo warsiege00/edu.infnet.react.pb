@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { IconButton, Drawer, Card, List, ListItem, ListItemPrefix, Button, Typography } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import {
     AnnotationIcon, 
@@ -15,9 +15,12 @@ import {
 export function SidebarDefault() {
     const [isOpen, setIsOpen] = useState(false);
     const { userRole, userName, logout } = useAuth(); 
+    const location = useLocation(); 
 
     const toggleDrawer = () => setIsOpen(!isOpen);
     const isAdmin = userRole === 'admin';
+
+    const isActive = (path) => location.pathname === path;
 
     const sidebarContent = (
         <Card className="h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
@@ -27,7 +30,7 @@ export function SidebarDefault() {
             <List>
                 {isAdmin && (
                     <Link to={"/cotacoes"} className="flex">
-                        <ListItem>
+                        <ListItem className={isActive('/cotacoes') ? 'text-blue-500' : ''}>
                             <ListItemPrefix>
                                 <SearchIcon className="h-5 w-5" />
                             </ListItemPrefix>
@@ -36,7 +39,7 @@ export function SidebarDefault() {
                     </Link>
                 )}
                 <Link to={"/solicitacoes"} className="flex">
-                    <ListItem>
+                    <ListItem className={isActive('/solicitacoes') ? 'text-blue-500' : ''}>
                         <ListItemPrefix>
                             <AnnotationIcon className="h-5 w-5" />
                         </ListItemPrefix>
@@ -46,7 +49,7 @@ export function SidebarDefault() {
                 
                 {isAdmin && (
                     <Link to={"/fornecedores"} className="flex">
-                        <ListItem>
+                        <ListItem className={isActive('/fornecedores') ? 'text-blue-500' : ''}>
                             <ListItemPrefix>
                                 <ShoppingCartIcon className="h-5 w-5" />
                             </ListItemPrefix>
@@ -56,7 +59,7 @@ export function SidebarDefault() {
                 )}
                 {isAdmin && (
                     <Link to={"/contatos"} className="flex">
-                        <ListItem>
+                        <ListItem className={isActive('/contatos') ? 'text-blue-500' : ''}>
                             <ListItemPrefix>
                                 <UserCircleIcon className="h-5 w-5" />
                             </ListItemPrefix>
@@ -66,7 +69,7 @@ export function SidebarDefault() {
                 )}
                 {isAdmin && (
                     <Link to={"/produtos"} className="flex">
-                        <ListItem>
+                        <ListItem className={isActive('/produtos') ? 'text-blue-500' : ''}>
                             <ListItemPrefix>
                                 <ArchiveIcon className="h-5 w-5" />
                             </ListItemPrefix>
@@ -76,7 +79,7 @@ export function SidebarDefault() {
                 )}
                 {isAdmin && (
                     <Link to={"/config"} className="flex">
-                        <ListItem>
+                        <ListItem className={isActive('/config') ? 'text-blue-500' : ''}>
                             <ListItemPrefix>
                                 <CogIcon className="h-5 w-5" />
                             </ListItemPrefix>
@@ -93,7 +96,7 @@ export function SidebarDefault() {
 
     return (
         <div>
-            {/* MObile */}
+            {/* Mobile */}
             <div className="lg:hidden">
                 <IconButton className="m-4" onClick={toggleDrawer}>
                     <MenuIcon className="h-5 w-5" />
